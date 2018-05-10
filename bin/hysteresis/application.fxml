@@ -7,36 +7,80 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="700.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hysteresis.Controller">
+<VBox prefHeight="668.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hysteresis.Controller">
 	<children>
 		<MenuBar VBox.vgrow="NEVER">
 			<menus>
 				<Menu mnemonicParsing="false" text="File">
 					<items>
-						<MenuItem mnemonicParsing="false" text="New" />
-						<MenuItem mnemonicParsing="false" text="Open…" />
-						<Menu mnemonicParsing="false" text="Open Recent" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Close" />
-						<MenuItem mnemonicParsing="false" text="Save" />
-						<MenuItem mnemonicParsing="false" text="Save As…" />
-						<MenuItem mnemonicParsing="false" text="Revert" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Preferences…" />
-						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Quit" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Help">
 					<items>
-						<MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+						<MenuItem mnemonicParsing="false" text="About Hysteresis" />
 					</items>
 				</Menu>
 			</menus>
 		</MenuBar>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="493.0" prefWidth="499.0" VBox.vgrow="ALWAYS">
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="675.0" prefWidth="192.0" VBox.vgrow="ALWAYS">
          <children>
-            <Button fx:id="fileButton" layoutX="108.0" layoutY="103.0" mnemonicParsing="false" onAction="#fileButtonClicked" text="Select Folder" />
+            <Button fx:id="fileButton" layoutX="164.0" layoutY="206.0" mnemonicParsing="false" onAction="#fileButtonClicked" text="Select Folder">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Label layoutX="337.0" layoutY="26.0" text="Hysteresis">
+               <font>
+                  <Font name="Calibri" size="43.0" />
+               </font>
+            </Label>
+            <Label layoutX="377.0" layoutY="88.0" text="by Joe Miller">
+               <font>
+                  <Font name="Calibri" size="19.0" />
+               </font>
+            </Label>
+            <Button fx:id="executeButton" layoutX="169.0" layoutY="334.0" mnemonicParsing="false" onAction="#execute" text="Run">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <TextArea fx:id="output" layoutX="546.0" layoutY="230.0" prefHeight="395.0" prefWidth="292.0" />
+            <Button fx:id="resetButton" layoutX="476.0" layoutY="595.0" mnemonicParsing="false" onAction="#resetApp" text="Reset">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="addSegButtons" layoutX="404.0" layoutY="271.0" mnemonicParsing="false" onAction="#addSegs" text="Add">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="168.0" layoutY="274.0" text="Segments">
+               <font>
+                  <Font name="Calibri" size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="num1" layoutX="278.0" layoutY="273.0" prefHeight="25.0" prefWidth="37.0" />
+            <TextField fx:id="num2" layoutX="340.0" layoutY="273.0" prefHeight="25.0" prefWidth="37.0" />
+            <Label layoutX="27.0" layoutY="203.0" text="Step 1">
+               <font>
+                  <Font name="Calibri" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="267.0" text="Step 2">
+               <font>
+                  <Font name="Calibri" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="331.0" text="Step 3">
+               <font>
+                  <Font name="Calibri" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="folderLabel" layoutX="279.0" layoutY="213.0" text="Folder: none selected">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
 	</children>
 </VBox>
