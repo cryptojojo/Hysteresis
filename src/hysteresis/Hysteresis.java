@@ -158,12 +158,6 @@ public class Hysteresis {
 
 			areaUnderCurve += (leftEq * rightEq);
 
-			BigDecimal bd = new BigDecimal(leftEq * rightEq).setScale(6, RoundingMode.CEILING);
-
-
-				System.out.println(bd);
-			
-
 		}
 
 		BigDecimal bd = new BigDecimal(areaUnderCurve).setScale(10, RoundingMode.CEILING);
