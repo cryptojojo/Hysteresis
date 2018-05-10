@@ -1,25 +1,17 @@
 package hysteresis;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.omg.CORBA.Environment;
-
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 public class Controller {
 
@@ -39,6 +31,8 @@ public class Controller {
 	public TextField num2;
 	@FXML
 	public Label folderLabel;
+	@FXML
+	public CheckBox gageCorrect;
 
 	public DirectoryChooser fileChooser = new DirectoryChooser();
 	private String outStr = "";
@@ -66,6 +60,9 @@ public class Controller {
 		output.setText(outStr);
 		folder = null;
 		listOfFiles = null;
+		num1.setText("");
+		num2.setText("");
+		segs = new ArrayList<Segments>();
 
 	}
 
@@ -111,14 +108,15 @@ public class Controller {
 			// segs.get(j).getNum2());
 			// }
 
-			hys = new Hysteresis(inputFile, 8, 9);
-			hys = new Hysteresis(inputFile, 18, 19);
-			hys = new Hysteresis(inputFile, 28, 29);
-			hys = new Hysteresis(inputFile, 38, 39);
-			hys = new Hysteresis(inputFile, 48, 49);
+			for (int c = 0; c < segs.size(); c++) {
+				hys = new Hysteresis(inputFile, segs.get(c).getNum1(), segs.get(c).getNum2(), gageCorrect.isSelected());
+			}
 
 			outStr += listOfFiles[i].getName() + " is done\n";
 			output.setText(outStr);
+
+			System.out.println(gageCorrect.isSelected());
+
 		}
 
 		outStr = "Done processing\n";

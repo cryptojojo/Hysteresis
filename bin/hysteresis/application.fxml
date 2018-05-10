@@ -39,7 +39,7 @@
                   <Font name="Calibri" size="19.0" />
                </font>
             </Label>
-            <Button fx:id="executeButton" layoutX="169.0" layoutY="334.0" mnemonicParsing="false" onAction="#execute" text="Run">
+            <Button fx:id="executeButton" layoutX="168.0" layoutY="398.0" mnemonicParsing="false" onAction="#execute" text="Run">
                <font>
                   <Font size="14.0" />
                </font></Button>
@@ -81,6 +81,12 @@
                   <Font name="Calibri" size="14.0" />
                </font>
             </Label>
+            <Label layoutX="27.0" layoutY="395.0" text="Step 4">
+               <font>
+                  <Font name="Calibri" size="30.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="gageCorrect" layoutX="170.0" layoutY="340.0" mnemonicParsing="false" text="Gage Length Correction" />
          </children></AnchorPane>
 	</children>
 </VBox>

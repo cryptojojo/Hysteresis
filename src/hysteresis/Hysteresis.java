@@ -23,6 +23,7 @@ public class Hysteresis {
 	private int num1 = 0;
 	private int num2 = 0;
 	private ArrayList<ArrayList<String>> result;
+	private boolean gageCorrect;
 
 	/**
 	 * Constructor for hysteresis class
@@ -32,10 +33,11 @@ public class Hysteresis {
 	 * @param num2
 	 * @throws IOException
 	 */
-	Hysteresis(String inputFile, int num1, int num2) throws IOException {
+	Hysteresis(String inputFile, int num1, int num2, boolean gageCorrect) throws IOException {
 		this.inputFile = inputFile;
 		this.num1 = num1;
 		this.num2 = num2;
+		this.gageCorrect = gageCorrect;
 
 		execute();
 
@@ -169,7 +171,8 @@ public class Hysteresis {
 	/**
 	 * subtracts the first strain value for the entire strain column, subtracts the
 	 * first stress value for the entire stress column, divides strain column by (1+
-	 * offsetstrain), multiply stress column by (1+ offsetstrain)
+	 * offsetstrain), multiply stress column by (1+ offsetstrain). Only does gage
+	 * correction if it was set in UI
 	 * 
 	 * @param data
 	 * @return zeroed data
@@ -193,18 +196,23 @@ public class Hysteresis {
 			data.get(i).set(1, bd.toString());
 		}
 
-		// divide the entire strain c0lumn by (1 + offeststrain)
-		for (int i = 1; i < data.size(); i++) {
-			String newStrain = Double.toString(Double.parseDouble(data.get(i).get(0)) / (1 + firstStrainVal));
-			BigDecimal bd = new BigDecimal(newStrain).setScale(6, RoundingMode.CEILING);
-			data.get(i).set(0, bd.toString());
-		}
+		// Gage correction
+		if (gageCorrect) {
 
-		// subtract the first stress value for the entire stress column
-		for (int i = 1; i < data.size(); i++) {
-			String newStress = Double.toString(Double.parseDouble(data.get(i).get(1)) * (1 + firstStrainVal));
-			BigDecimal bd = new BigDecimal(newStress).setScale(6, RoundingMode.CEILING);
-			data.get(i).set(1, bd.toString());
+			// divide the entire strain column by (1 + offeststrain)
+			for (int i = 1; i < data.size(); i++) {
+				String newStrain = Double.toString(Double.parseDouble(data.get(i).get(0)) / (1 + firstStrainVal));
+				BigDecimal bd = new BigDecimal(newStrain).setScale(6, RoundingMode.CEILING);
+				data.get(i).set(0, bd.toString());
+			}
+
+			// multiply the stress column by (1 + offeststrain)
+			for (int i = 1; i < data.size(); i++) {
+				String newStress = Double.toString(Double.parseDouble(data.get(i).get(1)) * (1 + firstStrainVal));
+				BigDecimal bd = new BigDecimal(newStress).setScale(6, RoundingMode.CEILING);
+				data.get(i).set(1, bd.toString());
+			}
+
 		}
 
 		return data;
