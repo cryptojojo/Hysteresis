@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -94,6 +96,9 @@ public class Hysteresis {
 		// removes all null elements
 		data.removeIf(nullElement::equals);
 
+		// zeros the data
+		data = zeroingData(data);
+
 		// adds the area under the curve to the header
 		data = addAreaUnderCurve(data);
 
@@ -135,12 +140,77 @@ public class Hysteresis {
 
 	}
 
+	/**
+	 * gets the area under the curve and puts it in the header
+	 * 
+	 * @param data
+	 * @return
+	 */
 	private ArrayList<ArrayList<String>> addAreaUnderCurve(ArrayList<ArrayList<String>> data) {
 
+		Double areaUnderCurve = 0.0;
 
+		for (int i = 1; i < data.size()-1; i++) {
+
+			Double leftEq = (Double.parseDouble(data.get(i + 1).get(1)) - Double.parseDouble(data.get(i).get(1))) / 2;
+			Double rightEq = Double.parseDouble(data.get(i + 1).get(0)) - Double.parseDouble(data.get(i).get(0));
+			
+			areaUnderCurve += (leftEq*rightEq);
+
+			
+			BigDecimal bd = new BigDecimal(leftEq).setScale(6, RoundingMode.CEILING);
+
+			System.out.println(bd);
+			
+		}
+
+		BigDecimal bd = new BigDecimal(areaUnderCurve).setScale(6, RoundingMode.CEILING);
 		
-		
-		
+		data.get(0).add("{AREA UNDER CURVE: " + bd + "}");
+		return data;
+	}
+
+	/**
+	 * subtracts the first strain value for the entire strain column, subtracts the
+	 * first stress value for the entire stress column, divides strain column by (1+
+	 * offsetstrain), multiply stress column by (1+ offsetstrain)
+	 * 
+	 * @param data
+	 * @return zeroed data
+	 */
+	private ArrayList<ArrayList<String>> zeroingData(ArrayList<ArrayList<String>> data) {
+
+		double firstStrainVal = Double.parseDouble(data.get(1).get(0));
+		double firstStressVal = Double.parseDouble(data.get(1).get(1));
+
+		// subtract the first strain value for the entire strain column
+		for (int i = 1; i < data.size(); i++) {
+			String newStrain = Double.toString(Double.parseDouble(data.get(i).get(0)) - firstStrainVal);
+			BigDecimal bd = new BigDecimal(newStrain).setScale(6, RoundingMode.CEILING);
+			data.get(i).set(0, bd.toString());
+		}
+
+		// subtract the first stress value for the entire stress column
+		for (int i = 1; i < data.size(); i++) {
+			String newStress = Double.toString(Double.parseDouble(data.get(i).get(1)) - firstStressVal);
+			BigDecimal bd = new BigDecimal(newStress).setScale(6, RoundingMode.CEILING);
+			data.get(i).set(1, bd.toString());
+		}
+
+		// divide the entire strain c0lumn by (1 + offeststrain)
+		for (int i = 1; i < data.size(); i++) {
+			String newStrain = Double.toString(Double.parseDouble(data.get(i).get(0)) / (1 + firstStrainVal));
+			BigDecimal bd = new BigDecimal(newStrain).setScale(6, RoundingMode.CEILING);
+			data.get(i).set(0, bd.toString());
+		}
+
+		// subtract the first stress value for the entire stress column
+		for (int i = 1; i < data.size(); i++) {
+			String newStress = Double.toString(Double.parseDouble(data.get(i).get(1)) * (1 + firstStrainVal));
+			BigDecimal bd = new BigDecimal(newStress).setScale(6, RoundingMode.CEILING);
+			data.get(i).set(1, bd.toString());
+		}
+
 		return data;
 	}
 

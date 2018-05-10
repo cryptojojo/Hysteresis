@@ -14,11 +14,13 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		String inputFile = "C:/Users/Joe/Desktop/GTR_stuff/G892_60C_EB_SCL_2";
+		String inputFile = "C:/Users/Joe/Desktop/GTR_stuff/G892_60C_EB_SCL_1";
 
-		Hysteresis hys8to9 = new Hysteresis(inputFile, 8, 9);
-		Hysteresis hys18to19 = new Hysteresis(inputFile, 18, 19);
-		
-		
+		Hysteresis hys = new Hysteresis(inputFile, 18, 19);
+		// hys = new Hysteresis(inputFile, 18, 19);
+		// hys = new Hysteresis(inputFile, 28, 29);
+		// hys = new Hysteresis(inputFile, 38, 39);
+		// hys = new Hysteresis(inputFile, 48, 49);
+
 	}
 }
