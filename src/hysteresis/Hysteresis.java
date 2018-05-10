@@ -150,22 +150,24 @@ public class Hysteresis {
 
 		Double areaUnderCurve = 0.0;
 
-		for (int i = 1; i < data.size()-1; i++) {
+		for (int i = 1; i < data.size() - 1; i++) {
 
-			Double leftEq = (Double.parseDouble(data.get(i + 1).get(1)) - Double.parseDouble(data.get(i).get(1))) / 2;
+			Double leftEq = Double.parseDouble(data.get(i).get(1))
+					+ ((Double.parseDouble(data.get(i + 1).get(1)) - Double.parseDouble(data.get(i).get(1))) / 2);
 			Double rightEq = Double.parseDouble(data.get(i + 1).get(0)) - Double.parseDouble(data.get(i).get(0));
-			
-			areaUnderCurve += (leftEq*rightEq);
 
-			
-			BigDecimal bd = new BigDecimal(leftEq).setScale(6, RoundingMode.CEILING);
+			areaUnderCurve += (leftEq * rightEq);
 
-			System.out.println(bd);
+			BigDecimal bd = new BigDecimal(leftEq * rightEq).setScale(6, RoundingMode.CEILING);
+
+
+				System.out.println(bd);
 			
+
 		}
 
-		BigDecimal bd = new BigDecimal(areaUnderCurve).setScale(6, RoundingMode.CEILING);
-		
+		BigDecimal bd = new BigDecimal(areaUnderCurve).setScale(10, RoundingMode.CEILING);
+
 		data.get(0).add("{AREA UNDER CURVE: " + bd + "}");
 		return data;
 	}
